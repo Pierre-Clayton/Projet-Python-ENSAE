@@ -42,7 +42,7 @@ TO_DUMMIES = [
 # ==========================
 # Set up models from joblib
 # ==========================
-
+y = df['Employed']
 cv_lr1 = load('modeles/logistic_regression_baseline.joblib')
 cv_tree1 = load('modeles/decision_tree_baseline.joblib')
 cv_forest1 = load('modeles/random_forest_baseline.joblib')
@@ -51,6 +51,14 @@ cv_lr = load('modeles/logistic_regression.joblib')
 cv_tree = load('modeles/decision_tree.joblib')
 cv_forest = load('modeles/random_forest.joblib')
 cv_xg = load('modeles/xgboost.joblib')
+explainer_lr1 = dx.Explainer(cv_lr1, df, y)
+explainer_tree1 = dx.Explainer(cv_tree1, df, y)
+explainer_forest1 = dx.Explainer(cv_forest1, df, y)
+explainer_xg1 = dx.Explainer(cv_xg1, df, y)
+explainer_lr = dx.Explainer(cv_lr, df, y)
+explainer_tree = dx.Explainer(cv_tree, df, y)
+explainer_forest = dx.Explainer(cv_forest, df, y)
+explainer_xg = dx.Explainer(cv_xg, df, y)
 
 # ==========================
 # Utils functions
@@ -129,13 +137,13 @@ def get_data_log_regression(parameters):
 
 def get_fairness_check(criteria, privileged):
     protected = df[criteria]
-    f_object_dc = cv_tree1.model_fairness(
+    f_object_dc = explainer_tree1.model_fairness(
         protected=protected, privileged=privileged, label="Decision Tree"
     )
-    f_object_rf = cv_forest1.model_fairness(
+    f_object_rf = explainer_forest1.model_fairness(
         protected=protected, privileged=privileged, label="Random Forest"
     )
-    f_object_gb = cv_xg1.model_fairness(
+    f_object_gb = explainer_xg1.model_fairness(
         protected=protected, privileged=privileged, label="Gradient Boosting"
     )
     return lambda t: f_object_dc.plot([f_object_rf, f_object_gb], type=t, show=False)
@@ -144,8 +152,8 @@ def get_fairness_check(criteria, privileged):
 def get_fairness_check_after_mitigation(criteria, privileged, model):
     protected = df[criteria]
     lookup = {
-        "Random Forest": [cv_forest1, cv_forest],
-        "Gradient Boosting": [cv_xg1, cv_xg]
+        "Random Forest": [explainer_forest1, explainer_forest],
+        "Gradient Boosting": [explainer_xg1, explainer_xg]
     }
 
     f_object = lookup[model][0].model_fairness(
