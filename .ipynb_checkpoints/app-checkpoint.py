@@ -4,25 +4,12 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from graphes import ST_GRAPHES
-# ST_GRAPHES contient les références des fonctions de production de chacun des graphes
+from scriptspages import ST_PAGES
+# ST_PAGES contient les références des script de chacune des pages
 
 # Fonction principale de l'application Streamlit
 def main():
     st.title("Visualisation des Données")
-
-    # Chargement des données
-    data = pd.read_csv("stackoverflow_full.csv")
-
-    # Affichage des données dans l'application
-    st.write("Aperçu des données :")
-    st.write(data.head())
-
-    # Création d'un graphique simple (ajustez selon vos données)
-    st.write("Visualisation des données :")
-    fig, ax = plt.subplots()
-    ax.hist(data['YearsCode'], bins=20)
-    st.pyplot(fig)
 
     # Création d'une barre latérale de navigation entre les pages de graphiques
     ## A noter : possible de faire 2 niveaux de choix si l'on souhaite
@@ -30,19 +17,19 @@ def main():
         st.header("Navigation")
 
         page_options = (
-            list(ST_GRAPHES.keys())
+            list(ST_PAGES.keys())
         )
         
         selected_page = st.selectbox(
-            label="Choissisez un graphique",
+            label="Choissisez la page que vous souhaitez consulter",
             options=page_options,
         )
         
-        graphe = (
-            ST_GRAPHES[selected_page]
+        page = (
+            ST_PAGES[selected_page]
         )
 
-    graphe()
+    page()
 
 
 # Exécution de la fonction principale
