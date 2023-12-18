@@ -17,13 +17,13 @@ st.markdown(
     À partir des résultats de l'enquête, nous avons construit un jeu de données avec les colonnes suivantes :    
     - `Age` : âge du candidat, >35 ans ou <35 ans *(catégorique)*
     - `EdLevel` : niveau d'éducation du candidat (Licence, Master, Doctorat...) *(catégorique)*
-    - `Gender` : genre du candidat, (Homme, Femme, ou Non-Binaire) *(catégorique)*
+    - `Gender` : genre du candidat (Homme, Femme, ou Non-Binaire) *(catégorique)*
     - `MainBranch` : si le candidat est un développeur professionnel *(catégorique)*
     - `YearsCode` : depuis combien de temps le candidat programme *(entier)*
     - `YearsCodePro` : depuis combien de temps le candidat programme dans un contexte professionnel *(entier)*
     - `PreviousSalary` : salaire du dernier emploi du candidat *(flottant)*
-    - `ComputerSkills` : nombre de compétences informatiques connues par le candidat *(entier)*
-    - `Employed` : variable cible, indiquant si le candidat a été embauché *(catégorique)*
+    - `ComputerSkills` : les compétences informatiques, mesurées par le nombre de langages maîtrisés par le candidat *(entier)*
+    - `Employed` : variable cible, indiquant si le candidat est employé *(catégorique)*
 
     **Sélectionnez la page souhaitée dans la barre latérale** pour mieux comprendre les données utilisées dans ce projet.
     """
