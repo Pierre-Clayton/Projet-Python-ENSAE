@@ -182,12 +182,12 @@ with st.sidebar:
  tab_fairness_test,
  tab_bias_mitigation) = st.tabs(
     [
-        "Analysis: employment",
-        "Analysis: salary",
-        "Linear Regression",
-        "Logistic Regression",
-        "Fairness Test",
-        "Bias Mitigation",
+        "Analyse : emploi",
+        "Analyse: salaire",
+        "Regression linéaire",
+        "Regression logistique",
+        "Test d'équité",
+        "Atténuation des biais",
     ]
 )
 
