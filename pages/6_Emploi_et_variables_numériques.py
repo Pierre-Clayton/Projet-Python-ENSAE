@@ -12,6 +12,12 @@ st.set_page_config(
     page_icon=":chart_with_upwards_trend:"
 )
 
+with st.sidebar:
+    st.title("Projet Python pour la Data Science")
+    st.subheader("Pierre CLAYTON")
+    st.subheader("Clément DE LARDEMELLE")
+    st.subheader("Louise LIGONNIERE")
+
 st.markdown(
     """
     ## Emploi et variables numériques
