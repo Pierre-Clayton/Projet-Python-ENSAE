@@ -28,83 +28,49 @@ st.markdown(
 )
 
 # Chargement des données
-df = pd.read_csv("stackoverflow_full.csv")
+df = pd.read_csv("stackoverflow_full.csv", index_col="Unnamed: 0")
 
 # Ajout d'une colonne Code ISO (nécessaire pour les cartes)
-iso = pd.read_excel("/home/onyxia/work/Projet-Python-ENSAE/" + "Liste-Excel-des-pays-du-monde.xlsx")
+iso = pd.read_excel("/home/onyxia/work/Projet-Python-ENSAE/" + "Liste-Excel-des-pays-du-monde.xlsx", skiprows=3)
 
-def countries_to_iso(country):
-    name_countries = iso['Unnamed: 4']
-    for i in range(len(name_countries)):
-        if name_countries[i] == country:
-            return iso.loc[i,'Unnamed: 1']
-    list_missing_values = ['United Kingdom of Great Britain and Northern Ireland',
-     'Russian Federation',
-     'United States of America',
-     'Netherlands',
-     'Iran, Islamic Republic of...',
-     'Hong Kong (S.A.R.)',
-     'United Arab Emirates',
-     'Bolivia',
-     'Czech Republic',
-     'The former Yugoslav Republic of Macedonia',
-     'Venezuela, Bolivarian Republic of...',
-     'Dominican Republic',
-     'Syrian Arab Republic',
-     'Taiwan',
-     'South Korea',
-     'Republic of Moldova',
-     "Lao People's Democratic Republic",
-     'Democratic Republic of the Congo',
-     'Philippines',
-     'United Republic of Tanzania',
-     'Kosovo',
-     'Nomadic',
-     'Congo, Republic of the...',
-     'Republic of Korea',
-     'Swaziland',
-     'Libyan Arab Jamahiriya',
-     'Sudan',
-     'Palestine',
-     'Cape Verde',
-     'Niger',
-     'Gambia']
-    fixed_missing_values = ["GBR",
-                    "RUS",
-                    "USA",
-                    "NLD",
-                    "IRN",
-                    "HKG",
-                    "ARE",
-                    "BOL",
-                    "CZE",
-                    "MKD",
-                    "VEN",
-                    "DOM",
-                    "SYR",
-                    "TWN",
-                    "KOR",
-                    "MDA",
-                    "LAO",
-                    "COG",
-                    "PHL",
-                    "TZA",
-                    "XXK",
-                    None,
-                    "COG",
-                    "KOR",
-                    "SWZ",
-                    "LBY",
-                    "SDN",
-                    "PSE",
-                    "CPV",
-                    "NER",
-                    "GMB"]
-    for i in range(len(list_missing_values)):
-        if list_missing_values[i] == country:
-            return fixed_missing_values[i]
-        
-df['ISO'] = df['Country'].apply(countries_to_iso)
+iso_dict = iso.set_index('Nom anglais')['Code alpha-3'].to_dict()
+
+dict_missing_values = {'United Kingdom of Great Britain and Northern Ireland' : 'GBR',
+                       'Russian Federation' : 'RUS',
+                       'United States of America' : 'USA',
+                       'Netherlands' : 'NLD',
+                       'Iran, Islamic Republic of...' : 'IRN',
+                       'Hong Kong (S.A.R.)' : 'HKG',
+                       'United Arab Emirates' : 'ARE',
+                       'Bolivia' : 'BOL',
+                       'Czech Republic' : 'CZE',
+                       'The former Yugoslav Republic of Macedonia' : 'MKD',
+                       'Venezuela, Bolivarian Republic of...' : 'VEN',
+                       'Dominican Republic' : 'DOM',
+                       'Syrian Arab Republic' : 'SYR',
+                       'Taiwan' : 'TWN',
+                       'South Korea' : 'KOR',
+                       'Republic of Moldova' : 'MDA',
+                       "Lao People's Democratic Republic" : 'LAO',
+                       'Democratic Republic of the Congo' : 'COG',
+                       'Philippines' : 'PHL',
+                       'United Republic of Tanzania' : 'TZA',
+                       'Kosovo' : 'XXK',
+                       'Nomadic' : None,
+                       'Congo, Republic of the...' : 'COG',
+                       'Republic of Korea' : 'KOR',
+                       'Swaziland' : 'SWZ',
+                       'Libyan Arab Jamahiriya' : 'LBY',
+                       'Sudan' : 'SDN',
+                       'Palestine' : 'PSE',
+                       'Cape Verde' : 'CPV',
+                       'Niger' : 'NER',
+                       'Gambia' : 'GMB'
+                      }
+
+iso_dict.update(dict_missing_values)
+
+df['ISO'] = df['Country'].map(iso_dict)
 
 # Tableau nombre de répondants et taux d'emploi par pays
 df_carto = df.groupby(['Country','ISO'])['Employed'].agg(['count', 'mean']).reset_index()

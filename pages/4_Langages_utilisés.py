@@ -25,7 +25,7 @@ st.markdown(
 )
 
 # Chargement des données
-df = pd.read_csv("stackoverflow_full.csv")
+df = pd.read_csv("stackoverflow_full.csv", index_col="Unnamed: 0")
 
 # Travailler avec HaveWorkedWith avant de supprimer la colonne
 x = [str(cat).split(";") for cat in df["HaveWorkedWith"]]

@@ -26,14 +26,14 @@ st.markdown(
 )
 
 # Chargement des données
-df = pd.read_csv("stackoverflow_full.csv")
+df = pd.read_csv("stackoverflow_full.csv", index_col="Unnamed: 0")
 
 # Recodage des variables catégorielles (ENG -> FR)
 df_fr = df.copy()
 
 df_fr["EmployedCat"] = pd.cut(df_fr["Employed"], bins=[-1, 0, 1], labels=["Sans emploi", "En emploi"]).astype("object")
 
-# 1. Graphe Age
+# Graphe Emploi
 fig = px.histogram(df_fr, x="EmployedCat", barmode="group", text_auto = True)
 
 fig.update_layout(
