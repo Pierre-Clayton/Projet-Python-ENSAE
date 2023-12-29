@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.model_selection import train_test_split
 import joblib 
 
 # ==========================
@@ -45,17 +46,19 @@ TO_DUMMIES = [
 
 X=df[['Age', 'Accessibility', 'EdLevel', 'Gender', 'MentalHealth', 'MainBranch','YearsCode', 'YearsCodePro', 'PreviousSalary', 'ComputerSkills']]
 y=df['Employed']
+X_train, X_test, y_train, y_test=train_test_split(X, y, test_size = 0.25, random_state = 4)
 
 exp1 = dx.Explainer(joblib.load("modeles/decision_tree_baseline.joblib"),X,y)
 exp1_m = dx.Explainer(joblib.load("modeles/decision_tree.joblib"),X,y)
 exp2 = dx.Explainer(joblib.load("modeles/random_forest_baseline.joblib"),X,y)
-exp2_m = dx.Explainer(joblib.load("modeles/random_forest.joblib"),X,y)
+exp2_m = dx.Explainer(joblib.load("modeles/test_forest.joblib"),X,y)
 exp3 = dx.Explainer(joblib.load("modeles/logistic_regression_baseline.joblib"),X,y)
-exp3_m = dx.Explainer(joblib.load("modeles/logistic_regression.joblib"),X,y)
+exp3_m = dx.Explainer(joblib.load("modeles/test_lr.joblib"),X,y)
 exp4 = dx.Explainer(joblib.load("modeles/xgboost_baseline.joblib"),X,y)
-exp4_m = dx.Explainer(joblib.load("modeles/xgboost.joblib"),X,y)
+#exp4_m = dx.Explainer(joblib.load("modeles/xgboost.joblib"),X,y) # Fonctionne pas (pas le bon modèle)
+exp4_m = dx.Explainer(joblib.load("modeles/test_xgb.joblib"),X,y) # Eureka ! 
 
-
+ 
 # ==========================
 # Utils functions
 # ==========================
@@ -133,7 +136,6 @@ def get_fairness_check_after_mitigation(criteria, privileged, model):
     lookup = {
         "Random Forest": [exp2, exp2_m],
         "Gradient Boosting": [exp4, exp4_m],
-        "Decision Tree": [exp1, exp1_m],
         "Logistic Regression": [exp3, exp3_m]
     }
 
@@ -149,6 +151,12 @@ def get_fairness_check_after_mitigation(criteria, privileged, model):
 # ==========================
 # User interface
 # ==========================
+
+with st.sidebar:
+    st.title("Projet Python pour la Data Science")
+    st.subheader("Pierre CLAYTON")
+    st.subheader("Clément DE LARDEMELLE")
+    st.subheader("Louise LIGONNIERE")
 
 (tab_linear_regression,
  tab_logistic_regression,
@@ -269,7 +277,7 @@ tab_bias_mitigation.header("Bias mitigation with Dalex")
 
 model_selector = tab_bias_mitigation.selectbox(
     "Which model should have its biases mitigated ?",
-    ["Random Forest", "Gradient Boosting", "Logistic Regression", "Decision Tree"],
+    ["Random Forest", "Gradient Boosting", "Logistic Regression"],
     key="bias6_model_selectbox",
 )
 
@@ -278,7 +286,7 @@ criteria_selector_5 = tab_bias_mitigation.selectbox(
 )
 
 criteria_selector_6 = tab_bias_mitigation.selectbox(
-    'Which value to be considered as "privileged" ?', ["Man"], key="bias6_2_selectbox"
+    'Which value to be considered as "privileged" ?', ["Woman","Man"], key="bias6_2_selectbox"
 )
 
 plot = get_fairness_check_after_mitigation(criteria_selector_5, criteria_selector_6, model_selector)
