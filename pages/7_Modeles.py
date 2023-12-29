@@ -40,30 +40,19 @@ TO_DUMMIES = [
 ]
 
 # ==========================
-# Set up models from joblib
+# Set up models from dumps
 # ==========================
-y = df['Employed']
-cv_lr1 = load('modeles/logistic_regression_baseline.joblib')
-cv_tree1 = load('modeles/decision_tree_baseline.joblib')
-cv_forest1 = load('modeles/random_forest_baseline.joblib')
-cv_xg1 = load('modeles/xgboost_baseline.joblib')
-cv_lr = load('modeles/logistic_regression.joblib')
-cv_tree = load('modeles/decision_tree.joblib')
-cv_forest = load('modeles/random_forest.joblib')
-cv_xg = load('modeles/xgboost.joblib')
-explainer_lr1 = dx.Explainer(cv_lr1, df, y)
-explainer_tree1 = dx.Explainer(cv_tree1, df, y)
-explainer_forest1 = dx.Explainer(cv_forest1, df, y)
-explainer_xg1 = dx.Explainer(cv_xg1, df, y)
-explainer_lr = dx.Explainer(cv_lr, df, y)
-explainer_tree = dx.Explainer(cv_tree, df, y)
-explainer_forest = dx.Explainer(cv_forest, df, y)
-explainer_xg = dx.Explainer(cv_xg, df, y)
+
+exp1 = dx.Explainer.load(open("explanations/explanations_dt_txt.txt", "rb"))
+exp2 = dx.Explainer.load(open("explanations/explanations_rf_b_txt.txt", "rb"))
+exp2_m = dx.Explainer.load(open("explanations/explanations_rf_txt.txt", "rb"))
+exp4 = dx.Explainer.load(open("explanations/explanations_xg_b_txt.txt", "rb"))
+exp4_m = dx.Explainer.load(open("explanations/explanations_xg_txt.txt", "rb"))
+
 
 # ==========================
 # Utils functions
 # ==========================
-
 def get_employed_bias_bar_figure(bias):
     df_bias = df.groupby([bias, "Employed"]).size().reset_index(name="Number")
     df_bias.Employed = (df_bias.Employed == 1)
@@ -98,6 +87,21 @@ def get_employed_bias_pie_figure(bias):
 def get_salary_bias_box_figure(bias):
     fig = px.box(df, x=bias, y="PreviousSalary")
     return fig
+
+
+def get_data_linear_regression(parameters, difference):
+    val_cols = list(set(VAL_COLS).intersection(parameters).difference(difference))
+    to_dummies = list(set(TO_DUMMIES).intersection(parameters).difference(difference))
+    if len(to_dummies) > 0:
+        X = pd.get_dummies(df[to_dummies], drop_first=True, dtype=int)
+    else:
+        X = pd.DataFrame()
+    X[val_cols] = df[val_cols]
+    reg = LinearRegression().fit(X, df[difference])
+
+    results = pd.DataFrame({"Variables": reg.feature_names_in_, "Coeff.": reg.coef_})
+    return results, reg.score(X, df[difference])
+
 
 def get_data_log_regression(parameters):
     val_cols = list(set(VAL_COLS).intersection(parameters))
@@ -135,15 +139,16 @@ def get_data_log_regression(parameters):
     )
     return results, reg.score(X, df["Employed"]), X, delta_p
 
+
 def get_fairness_check(criteria, privileged):
     protected = df[criteria]
-    f_object_dc = explainer_tree1.model_fairness(
+    f_object_dc = exp1.model_fairness(
         protected=protected, privileged=privileged, label="Decision Tree"
     )
-    f_object_rf = explainer_forest1.model_fairness(
+    f_object_rf = exp2.model_fairness(
         protected=protected, privileged=privileged, label="Random Forest"
     )
-    f_object_gb = explainer_xg1.model_fairness(
+    f_object_gb = exp4.model_fairness(
         protected=protected, privileged=privileged, label="Gradient Boosting"
     )
     return lambda t: f_object_dc.plot([f_object_rf, f_object_gb], type=t, show=False)
@@ -152,8 +157,8 @@ def get_fairness_check(criteria, privileged):
 def get_fairness_check_after_mitigation(criteria, privileged, model):
     protected = df[criteria]
     lookup = {
-        "Random Forest": [explainer_forest1, explainer_forest],
-        "Gradient Boosting": [explainer_xg1, explainer_xg]
+        "Random Forest": [exp2, exp2_m],
+        "Gradient Boosting": [exp4, exp4_m]
     }
 
     f_object = lookup[model][0].model_fairness(
@@ -164,16 +169,20 @@ def get_fairness_check_after_mitigation(criteria, privileged, model):
     )
     return lambda t: f_object.plot([f_object_mitigated], type=t, show=False)
 
+
 # ==========================
 # User interface
 # ==========================
 
 with st.sidebar:
-    st.title("Projet Python pour la Data Science")
+    st.title("Ekimetrics Responsible AI")
     st.image("LOGO-ENSAE.png")
-    st.subheader("Pierre CLAYTON")
-    st.subheader("Clément DE LARDEMELLE")
-    st.subheader("Louise LIGONNIERE")
+    st.subheader("Alyette")
+    st.subheader("Johanne")
+    st.subheader("Jacques")
+    st.subheader("Rémy")
+    st.subheader("Théo")
+    st.subheader("Tien-Thinh")
 
 (tab_analysis_employment,
  tab_analysis_salary,
@@ -182,12 +191,12 @@ with st.sidebar:
  tab_fairness_test,
  tab_bias_mitigation) = st.tabs(
     [
-        "Analyse : emploi",
-        "Analyse: salaire",
-        "Regression linéaire",
-        "Regression logistique",
-        "Test d'équité",
-        "Atténuation des biais",
+        "Analysis: employment",
+        "Analysis: salary",
+        "Linear Regression",
+        "Logistic Regression",
+        "Fairness Test",
+        "Bias Mitigation",
     ]
 )
 
@@ -221,6 +230,22 @@ figure_3 = get_salary_bias_box_figure(criteria_selection_2)
 tab_analysis_salary.plotly_chart(figure_3)
 
 # ==========================
+# Linear Regression
+# ==========================
+
+tab_linear_regression.header("Linear Regression")
+list_col3 = tab_linear_regression.multiselect(
+    "Select variable for Linear Regress: ",
+    VAL_COLS + TO_DUMMIES + ["Employed"],
+    default=VAL_COLS[1:] + TO_DUMMIES + ["Employed"],
+)
+
+y_col3 = tab_linear_regression.selectbox("Select", VAL_COLS)
+result_df3, score3 = get_data_linear_regression(list_col3, y_col3)
+tab_linear_regression.subheader(f"The score is: {round(score3 * 100, 2)}%")
+tab_linear_regression.table(result_df3)
+
+# ==========================
 # Logistic Regression
 # ==========================
 
@@ -241,13 +266,13 @@ tab_logistic_regression.table(result_df)
 tab_fairness_test.header("Models on biased dataset performance:")
 
 tab_fairness_test.subheader("Decision Tree performance")
-tab_fairness_test.table(cv_tree1.model_performance().result)
+tab_fairness_test.table(exp1.model_performance().result)
 
 tab_fairness_test.subheader("Random Forest performance")
-tab_fairness_test.table(cv_forest1.model_performance().result)
+tab_fairness_test.table(exp2.model_performance().result)
 
 tab_fairness_test.subheader("Gradient Boosting performance")
-tab_fairness_test.table(cv_xg1.model_performance().result)
+tab_fairness_test.table(exp4.model_performance().result)
 
 tab_fairness_test.header("Fairness check")
 

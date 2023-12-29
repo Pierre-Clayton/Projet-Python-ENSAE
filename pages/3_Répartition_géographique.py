@@ -31,7 +31,7 @@ st.markdown(
 df = pd.read_csv("stackoverflow_full.csv", index_col="Unnamed: 0")
 
 # Ajout d'une colonne Code ISO (nécessaire pour les cartes)
-iso = pd.read_excel("/home/onyxia/work/Projet-Python-ENSAE/" + "Liste-Excel-des-pays-du-monde.xlsx", skiprows=3)
+iso = pd.read_excel("Liste-Excel-des-pays-du-monde.xlsx", skiprows=3)
 
 iso_dict = iso.set_index('Nom anglais')['Code alpha-3'].to_dict()
 
