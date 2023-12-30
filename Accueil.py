@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-    page_title="Visualisation des Données", 
+    page_title="Accueil", 
     page_icon=":chart_with_upwards_trend:"
 )
 
@@ -16,9 +16,15 @@ with st.sidebar:
 
 st.markdown(
     """
-    # Bienvenue sur l'application de visualisation des données !
+    # Bienvenue sur l'application du projet !
 
-    Ce projet s'appuie sur l'édition 2022 de l'enquête annuelle générée par les utilisateurs de StackOverflow, qui s'intéresse à tous les aspects de l'expérience des développeurs, de l'apprentissage du code aux technologies préférées, en passant par le contrôle de version et l'expérience professionnelle. L'enquête réunit les réponses de plus de 70 000 utilisateurs, issus de plus de 180 pays.
+    ### Objectifs du projet
+
+    Ce projet s'intéresse aux biais dans les processus de recrutement des entreprises. L'objectif est de développer un outil de sélection de candidats innovant, qui identifie les biais dans le processus de recrutement et les atténue.
+
+    ### Données utilisées
+
+    Ce projet s'appuie sur l'édition 2022 de l'enquête annuelle générée par les utilisateurs de StackOverflow, qui s'intéresse à tous les aspects de l'expérience des développeurs, de l'apprentissage du code aux technologies préférées, en passant par le contrôle de version et l'expérience professionnelle. L'enquête réunit les réponses de 73 462 utilisateurs, issus de plus de 180 pays.
     
     À partir des résultats de l'enquête, nous avons construit un jeu de données avec les colonnes suivantes :    
     - `Age` : âge du candidat, >35 ans ou <35 ans *(catégorique)*
