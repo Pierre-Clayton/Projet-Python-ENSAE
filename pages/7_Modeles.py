@@ -218,15 +218,15 @@ tab_fairness_test.table(exp3.model_performance().result)
 tab_fairness_test.subheader("Gradient Boosting performance")
 tab_fairness_test.table(exp4.model_performance().result)
 
-tab_fairness_test.header("Fairness check")
+tab_fairness_test.header("Test d'équité")
 
 criteria_selector_3 = tab_fairness_test.selectbox(
-    "Which criteria to check fairness on ?",
+    "Sur quel critère tester l'équité ?",
     ["Age", "Gender", "MentalHealth", "Accessibility"],
 )
 
 criteria_selector_4 = tab_fairness_test.selectbox(
-    'Which value to be considered as "privileged" ?',
+    'Quelle catégorie considérer comme "privileged" ?',
     set(df[criteria_selector_3])
 )
 
@@ -273,20 +273,20 @@ t5_heatmap.plotly_chart(
 # Bias mitigation
 # ==========================
 
-tab_bias_mitigation.header("Bias mitigation with Dalex")
+tab_bias_mitigation.header("Mitigation des biais avec Dalex")
 
 model_selector = tab_bias_mitigation.selectbox(
-    "Which model should have its biases mitigated ?",
+    "Quel modèle devrait avoir ses biais mitigés ?",
     ["Random Forest", "Gradient Boosting", "Logistic Regression"],
     key="bias6_model_selectbox",
 )
 
 criteria_selector_5 = tab_bias_mitigation.selectbox(
-    "Which criteria to check fairness on ?", ["Gender"], key="bias6_1_selectbox"
+    "Sur quel critère tester l'équité ?", ["Gender"], key="bias6_1_selectbox"
 )
 
 criteria_selector_6 = tab_bias_mitigation.selectbox(
-    'Which value to be considered as "privileged" ?', ["Woman","Man"], key="bias6_2_selectbox"
+    'Quelle catégorie considérer comme "privileged" ?', ["Woman","Man"], key="bias6_2_selectbox"
 )
 
 plot = get_fairness_check_after_mitigation(criteria_selector_5, criteria_selector_6, model_selector)
