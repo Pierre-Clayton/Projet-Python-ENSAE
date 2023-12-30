@@ -152,7 +152,7 @@ fig_info = px.histogram(df_fr, x="ComputerSkills", barmode="group")
 
 fig_info.update_layout(
     title_text="Distribution des compétences en informatique",
-    xaxis_title_text="Compétences en informatique (nombre de langages maîtrisés)", 
+    xaxis_title_text="Nombre de langages maîtrisés", 
     yaxis_title_text="Effectif",
     bargap=0.2, 
     bargroupgap=0.1 
