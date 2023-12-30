@@ -71,9 +71,9 @@ fig_salaire.update_layout(
 fig_info = px.box(df_fr, x="EmployedCat", y = "ComputerSkills")
 
 fig_info.update_layout(
-    title_text="Distribution des compétences en informatique selon le statut d'emploi",
+    title_text="Distribution des compétences en informatique (nombre de langages maîtrisés) selon le statut d'emploi",
     xaxis_title_text="Statut d'emploi", 
-    yaxis_title_text="Compétences en informatique (nombre de langages maîtrisés)",
+    yaxis_title_text="Nombre de langages maîtrisés",
     bargap=0.2, 
     bargroupgap=0.1 
 )

@@ -113,13 +113,13 @@ fig_nb.update_layout(
 )
 
 # 2. Carte du taux d'emploi
-fig_taux = px.choropleth(df_carto, locations="ISO",
+fig_taux = px.choropleth(df_carto[df_carto['count']>100], locations="ISO",
                     color="percentage",
                     hover_name="Country",
                     color_continuous_scale=px.colors.sequential.Plasma)
 
 fig_taux.update_layout(
-    title_text="Taux d'emploi par pays",
+    title_text="Taux d'emploi par pays (pour les pays ayant au moins 100 répondants)",
     coloraxis_colorbar_title_text = "Taux d'emploi",
 )
 

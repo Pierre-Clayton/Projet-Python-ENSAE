@@ -66,7 +66,7 @@ df_fr["MainBranch"] = df_fr["MainBranch"].replace(
 
 # 1. Graphe Age
 # DF des Pourcentages Age
-grouped_df_age = df_fr.groupby(['Age', 'EmployedCat']).size().reset_index(name='count')
+grouped_df_age = df_fr.groupby(['Age', 'EmployedCat'], observed = True).size().reset_index(name='count')
 total_counts = df_fr.groupby('Age').size()
 
 grouped_df_age['percentage'] = (grouped_df_age['count'] / grouped_df_age['Age'].map(total_counts) * 100).round(1)
@@ -90,7 +90,7 @@ fig_age.update_traces(texttemplate = '%{x}%')
 
 # 2. Graphe Genre
 # DF des Pourcentages Genre
-grouped_df_genre = df_fr.groupby(['Gender', 'EmployedCat']).size().reset_index(name='count')
+grouped_df_genre = df_fr.groupby(['Gender', 'EmployedCat'], observed = True).size().reset_index(name='count')
 total_counts = df_fr.groupby('Gender').size()
 
 grouped_df_genre['percentage'] = (grouped_df_genre['count'] / grouped_df_genre['Gender'].map(total_counts) * 100).round(1)
@@ -114,7 +114,7 @@ fig_genre.update_traces(texttemplate = '%{x}%')
 
 # 3. Graphe Niveau d'éducation
 # DF des Pourcentages Niveau d'éd
-grouped_df_ed = df_fr.groupby(['EdLevel', 'EmployedCat']).size().reset_index(name='count')
+grouped_df_ed = df_fr.groupby(['EdLevel', 'EmployedCat'], observed = True).size().reset_index(name='count')
 total_counts = df_fr.groupby('EdLevel').size()
 
 grouped_df_ed['percentage'] = (grouped_df_ed['count'] / grouped_df_ed['EdLevel'].map(total_counts) * 100).round(1)
@@ -138,7 +138,7 @@ fig_ed.update_traces(texttemplate = '%{x}%')
 
 # 4. Graphe Branche pro
 # DF des Pourcentages Branche pro
-grouped_df_branch = df_fr.groupby(['MainBranch', 'EmployedCat']).size().reset_index(name='count')
+grouped_df_branch = df_fr.groupby(['MainBranch', 'EmployedCat'], observed = True).size().reset_index(name='count')
 total_counts = df_fr.groupby('MainBranch').size()
 
 grouped_df_branch['percentage'] = (grouped_df_branch['count'] / grouped_df_branch['MainBranch'].map(total_counts) * 100).round(1)
