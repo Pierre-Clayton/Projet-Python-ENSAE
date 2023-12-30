@@ -31,9 +31,33 @@ st.markdown(
 df = pd.read_csv("stackoverflow_full.csv", index_col="Unnamed: 0")
 
 # Ajout d'une colonne Code ISO (nécessaire pour les cartes)
-iso = pd.read_excel("Liste-Excel-des-pays-du-monde.xlsx", skiprows=3)
 
-iso_dict = iso.set_index('Nom anglais')['Code alpha-3'].to_dict()
+from bs4 import BeautifulSoup
+import requests
+
+url = "https://www.iban.com/country-codes"
+
+page = requests.get(url)
+
+soup = BeautifulSoup(page.text, 'html')
+
+table = soup.find('table')
+
+titles = table.find_all('th')
+
+table_titles = [title.text for title in titles]
+
+iso = pd.DataFrame(columns = table_titles)
+
+column_data = table.find_all('tr')
+
+for row in column_data[1:]:
+    row_data = row.find_all('td')
+    individual_row_data = [data.text for data in row_data]
+    length = len(iso)
+    iso.loc[length] = individual_row_data
+
+iso_dict = iso.set_index('Country')['Alpha-3 code'].to_dict()
 
 dict_missing_values = {'United Kingdom of Great Britain and Northern Ireland' : 'GBR',
                        'Russian Federation' : 'RUS',
