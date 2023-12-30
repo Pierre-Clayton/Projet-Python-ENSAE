@@ -74,7 +74,8 @@ grouped_df_age['percentage'] = (grouped_df_age['count'] / grouped_df_age['Age'].
 # Graphe Pourcentages Age
 fig_age = px.bar(grouped_df_age, orientation = 'h', x="percentage", y = "Age", color = "EmployedCat", 
                  text_auto = True,
-                 category_orders = dict(Age = ["Moins de 35 ans", "Plus de 35 ans"])
+                 category_orders = dict(Age = ["Moins de 35 ans", "Plus de 35 ans"]), 
+                 color_discrete_sequence = px.colors.qualitative.Pastel
 )
 
 fig_age.update_layout(
@@ -98,7 +99,8 @@ grouped_df_genre['percentage'] = (grouped_df_genre['count'] / grouped_df_genre['
 # Graphe Pourcentages Genre
 fig_genre = px.bar(grouped_df_genre, orientation = 'h', x="percentage", y = "Gender", color = "EmployedCat", 
                    text_auto = True,
-                   category_orders = dict(Gender = ["Homme", "Femme","Non-Binaire"])
+                   category_orders = dict(Gender = ["Homme", "Femme","Non-Binaire"]),
+                   color_discrete_sequence = px.colors.qualitative.Pastel
 )
 
 fig_genre.update_layout(
@@ -122,7 +124,8 @@ grouped_df_ed['percentage'] = (grouped_df_ed['count'] / grouped_df_ed['EdLevel']
 # Graphe Pourcentages Niveau d'éd
 fig_ed = px.bar(grouped_df_ed, orientation = 'h', x="percentage", y = "EdLevel", color = "EmployedCat",
                 text_auto = True,
-                category_orders = dict(EdLevel = ["Pas d'éducation supérieure", "Licence", "Master", "Doctorat", "Autre"])
+                category_orders = dict(EdLevel = ["Pas d'éducation supérieure", "Licence", "Master", "Doctorat", "Autre"]),
+                color_discrete_sequence = px.colors.qualitative.Pastel
 )
 
 fig_ed.update_layout(
@@ -145,7 +148,8 @@ grouped_df_branch['percentage'] = (grouped_df_branch['count'] / grouped_df_branc
 
 # Graphe Pourcentages Branche pro
 fig_branch = px.bar(grouped_df_branch, orientation = 'h', x="percentage", y = "MainBranch", color = "EmployedCat", text_auto = True,
-                    category_orders = dict(MainBranch = ["Développement", "Autre"])
+                    category_orders = dict(MainBranch = ["Développement", "Autre"]),
+                    color_discrete_sequence = px.colors.qualitative.Pastel
                    )
 
 fig_branch.update_layout(

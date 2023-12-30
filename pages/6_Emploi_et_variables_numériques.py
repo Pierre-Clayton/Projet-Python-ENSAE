@@ -36,45 +36,57 @@ df_fr = df.copy()
 df_fr["EmployedCat"] = pd.cut(df_fr["Employed"], bins=[-1, 0, 1], labels=["Sans emploi", "En emploi"]).astype("object")
 
 # 1. Années de code vs. statut d'emploi
-fig_code = px.box(df_fr, x="EmployedCat", y = "YearsCode")
+fig_code = px.box(df_fr, x="EmployedCat", y = "YearsCode",
+                  color = "EmployedCat", color_discrete_sequence = ['rgb(246, 207, 113)','rgb(102, 197, 204)']
+)
 
 fig_code.update_layout(
     title_text="Distribution des années de code selon le statut d'emploi",
     xaxis_title_text="Statut d'emploi", 
     yaxis_title_text="Années de code",
+    legend_title_text = "Statut d'emploi",
     bargap=0.2, 
-    bargroupgap=0.1 
+    bargroupgap=0.1
 )
 
 # 2. Années de code pro vs. statut d'emploi
-fig_codepro = px.box(df_fr, x="EmployedCat", y = "YearsCodePro")
+fig_codepro = px.box(df_fr, x="EmployedCat", y = "YearsCodePro",
+                  color = "EmployedCat", color_discrete_sequence = ['rgb(246, 207, 113)','rgb(102, 197, 204)']
+)
 
 fig_codepro.update_layout(
     title_text="Distribution des années de code professionnel selon le statut d'emploi",
     xaxis_title_text="Statut d'emploi", 
     yaxis_title_text="Années de code professionnel",
+    legend_title_text = "Statut d'emploi",
     bargap=0.2, 
     bargroupgap=0.1 
 )
 
 # 3. Salaire précédent vs. statut d'emploi
-fig_salaire = px.box(df_fr, x="EmployedCat", y = "PreviousSalary")
+fig_salaire = px.box(df_fr, x="EmployedCat", y = "PreviousSalary",
+                  color = "EmployedCat", color_discrete_sequence = ['rgb(246, 207, 113)','rgb(102, 197, 204)']
+)
 
 fig_salaire.update_layout(
     title_text="Distribution du salaire précédent selon le statut d'emploi",
     xaxis_title_text="Statut d'emploi", 
     yaxis_title_text="Salaire précédent",
+    legend_title_text = "Statut d'emploi",
     bargap=0.2, 
     bargroupgap=0.1 
 )
 
 # 4. Compétences en informatique vs. statut d'emploi
-fig_info = px.box(df_fr, x="EmployedCat", y = "ComputerSkills")
+fig_info = px.box(df_fr, x="EmployedCat", y = "ComputerSkills",
+                  color = "EmployedCat", color_discrete_sequence = ['rgb(246, 207, 113)','rgb(102, 197, 204)']
+)
 
 fig_info.update_layout(
     title_text="Distribution des compétences en informatique (nombre de langages maîtrisés) selon le statut d'emploi",
     xaxis_title_text="Statut d'emploi", 
     yaxis_title_text="Nombre de langages maîtrisés",
+    legend_title_text = "Statut d'emploi",
     bargap=0.2, 
     bargroupgap=0.1 
 )
@@ -91,12 +103,15 @@ df_fr['LanguagesList'] = df_fr['HaveWorkedWith'].apply(lambda x: [] if pd.isna(x
 df_fr['TopLanguagesCount'] = df_fr['LanguagesList'].apply(lambda langlist: sum(lang in list(top_languages["Langage"]) for lang in langlist))
 
 # Graphe
-fig_info2 = px.box(df_fr, x="EmployedCat", y = "TopLanguagesCount")
+fig_info2 = px.box(df_fr, x="EmployedCat", y = "TopLanguagesCount",
+                  color = "EmployedCat", color_discrete_sequence = ['rgb(246, 207, 113)','rgb(102, 197, 204)']
+)
 
 fig_info2.update_layout(
     title_text="Distribution des compétences en informatique (mesure alternative) selon le statut d'emploi",
     xaxis_title_text="Statut d'emploi", 
     yaxis_title_text="Nombre de langages maîtrisés parmi les 10 langages les plus présents",
+    legend_title_text = "Statut d'emploi",
     bargap=0.2, 
     bargroupgap=0.1 
 )

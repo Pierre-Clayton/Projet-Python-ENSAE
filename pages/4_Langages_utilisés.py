@@ -48,18 +48,26 @@ ax.imshow(wordcloud, interpolation = 'bilinear')
 plt.axis("off")
 st.pyplot(fig)
 
-# Tableau des 10 langages les plus employés
-top_languages = languages_count.most_common(10)
+# Les 20 langages les plus employés
+top_languages20 = languages_count.most_common(20)
+top_languages20 = pd.DataFrame(top_languages20, columns = ["Langage", "Count"], index = range(1,21))
 
-top_languages = pd.DataFrame(top_languages, columns = ["Langage", "Nombre d'occurences"], index = range(1,11))
+fig_lang = px.bar(top_languages20.sort_values(by = "Count"), 
+                        x = "Count", y = "Langage", orientation = 'h',
+                        text_auto = True, 
+                        color = "Count",color_continuous_scale = "darkmint")
 
-st.markdown(
-    """
-    ##### Tableau des 10 langages les plus employés : 
-    """
+fig_lang.update_layout(
+    title_text="Les 20 langages les plus employés",
+    xaxis_title_text="Nombre d'occurences", 
+    yaxis_title_text="Langage",
+    bargap=0.2, 
+    bargroupgap=0.1,
+    width=800,
+    height=700
 )
 
-st.dataframe(top_languages)
+st.plotly_chart(fig_lang)
 
 # Mesure alternative des compétences en informatique
 st.markdown(
@@ -73,6 +81,9 @@ st.markdown(
 )
 
 # Ajout d'une colonne qui compte le nombre de langages maîtrisés parmi les 10 plus courants
+top_languages = languages_count.most_common(10)
+top_languages = pd.DataFrame(top_languages, columns = ["Langage", "Nombre d'occurences"], index = range(1,11))
+
 df['LanguagesList'] = df['HaveWorkedWith'].apply(lambda x: [] if pd.isna(x) else x.split(';'))
 
 df['TopLanguagesCount'] = df['LanguagesList'].apply(lambda langlist: sum(lang in list(top_languages["Langage"]) for lang in langlist))
