@@ -182,6 +182,12 @@ with tab_info:
 
 st.markdown(
     """
-    On remarque donc que ...
+    Les répondants sont majoritairement jeunes (65% ont moins de 35 ans). Plus de 93% sont des hommes, ce qui est le défaut principal de notre base. Environ 50% des répondants ont un niveau licence, et 25% un master. La plus grande partie de la base travaille dans le développement (plus de 91%).
+
+    Le nombre d'années de codage est très dispersé, atteignant jusqu'à 50 ans pour les répondants ayant le plus d'ancienneté de codage. On remarque toutefois un pic autour de 10 années de codage (ce qui est cohérent avec l'âge plutôt jeune des répondants). Le nombre d'années de codage dans le cadre professionnel est légèrement moins élevé et moins dispersé, avec un pic plutôt autour de 4 ans de codage.
+
+    Le salaire précédent est aussi extrêmement dispersé. 
+
+    Enfin, les compétences en informatique, mesurées ici par le nombre de langages maîtrisés, semble suivre une gaussienne avec en moyenne une dizaine de langages. On remarque quelques valeurs extrêmes de répondants maitrisant plus de 50 langages.
     """
 )

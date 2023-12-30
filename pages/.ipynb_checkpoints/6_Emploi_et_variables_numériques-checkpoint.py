@@ -117,6 +117,8 @@ with tab_info2:
 
 st.markdown(
     """
-    On remarque donc que ...
+    Le nombre d'années de codage, dans le cadre professionnel ou non, et le salaire précédent semblent peu varier selon le statut d'emploi. Ces variables semblent donc peu pertinentes pour expliquer l'employabilité des répondants.
+
+    A l'inverse, les compétences en informatique (qu'elles soient mesurées par le nombre total de langages maîtrisés ou parmi les 10 langages les plus fréquents) semblent plus importantes chez les répondants en emploi. Ainsi, les 3 quarts des répondants sans emploi maîtrisent moins de 12 langages, alors que les 3 quarts des répondants en emploi maîtrisent plus de 13 langages. Ce résultat est néanmoins à relier avec la branche professionnelle principale : ainsi, les répondants ne travaillant pas dans le développement, même s'ils sont peu dans la base, maîtrisent moins de langages, et sont aussi significativement moins employés.
     """
 )

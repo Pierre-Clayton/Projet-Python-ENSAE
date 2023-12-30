@@ -24,6 +24,8 @@ st.markdown(
     """
     ## Langages utilisés par les répondants
 
+    Les langages les plus employés par les répondants sont les suivants : 
+
     """
 )
 
@@ -62,6 +64,8 @@ st.dataframe(top_languages)
 # Mesure alternative des compétences en informatique
 st.markdown(
     """
+    ### Une mesure alternative des compétences en informatique
+    
     Jusqu'ici, les compétences en informatique étaient mesurées via la variable `ComputerSkills` qui comptait le nombre de langages maîtrisés par chaque développeur. Ici, on crée une mesure alternative des compétences en informatique grâce à un décompte des langages maîtrisés parmi les 10 langages les plus courants dans la base.
 
     On obtient la distribution suivante : 
@@ -88,6 +92,8 @@ st.plotly_chart(fig_info2)
 
 st.markdown(
     """
-    On remarque donc que ...
+    Les langages utilisés sont donc très concentrés. Les 4 premiers langages (JavaScript, Docker, HTML/CSS et SQL) sont tous utilisés par plus de 50% des répondants, et jusqu'à 67% pour JavaScript.
+
+    Lorsque l'on compte le nombre de langages maîtrisés parmi les 10 langages les plus cités dans la base, on trouve des résultats cohérents. Ainsi, presque l'intégralité (98%) des répondants maîtrisent au moins 1 de ces 10 langages. En moyenne, les répondants en maîtrisent 5. 
     """
 )

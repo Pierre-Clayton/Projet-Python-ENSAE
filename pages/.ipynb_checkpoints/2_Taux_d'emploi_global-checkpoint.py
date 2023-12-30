@@ -48,6 +48,7 @@ st.plotly_chart(fig)
 
 st.markdown(
     """
-    On remarque donc que ...
+    Le taux d'emploi moyen sur la base est donc de 54%. C'est relativement faible. Sur ce point, la base des répondants à l'enquête ne semble pas représentative de la réalité du marché du travail. Néanmoins, l'avantage pour notre étude est qu'on dispose d'un échantillon de répondants non-employés de taille similaire à celui de répondants employés, permettant des analyses fiables sur ces deux sous-échantillons.
+
     """
 )

@@ -173,6 +173,14 @@ with tab_branch:
 
 st.markdown(
     """
-    On remarque donc que ...
+    **Pour rappel, le taux d'emploi moyen sur l'ensemble de la base est de 54%.**
+
+    Les moins de 35 ans semblent donc légèrement plus employés que les plus de 35%. Les femmes sont beaucoup moins employées, avec près de 10 points d'écart. Le taux d'emploi des personnes non-binaires est plus élevé, mais l'échantillon est très faible. 
+    
+    Le niveau d'éducation semble aussi beaucoup jouer dans l'emploi, avec un taux d'emploi plus élevé pour les répondants ayant un niveau licence ou inférieur. A l'inverse, il est très faible pour les titulaires d'un doctorat (29%). 
+
+    Enfin, les répondants travaillant dans le développement sont plus employées ici (mais elles constituent l'essentiel de la base).
+
+    La principale source de biais injustifié que l'on relève dans cette analyse est donc le genre. C'est la variable sur laquelle on se concentre dans la suite de la modélisation. On vérifiera notamment si le biais qui semble se dessiner ici est bien significatif, et s'il n'est pas simplement dû à une corrélation du genre avec d'autres variables qui peuvent expliquer l'employabilité (par exemple, le niveau d'éducation).
     """
 )

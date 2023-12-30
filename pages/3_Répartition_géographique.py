@@ -134,6 +134,9 @@ with tab_taux:
 
 st.markdown(
     """
-    On remarque donc que ...
+    Les répondants sont répartis sur tous les continents de façon satisfaisante. Les pays les plus représentés sont les États-Unis (20% des répondants), l'Allemagne (7%), l'Inde (7%), le Royaume-Uni (6%), le Canada, la France et le Brésil (entre 3.5 et 4%).
+
+    Le taux d'emploi est globalement uniforme entre les pays, entre 50 et 60%. On note tout de même quelques valeurs élevées (dépassant les 65% voire atteignant plus de 70% pour le Pérou et le Sri Lanka). Ces valeurs sont toutefois à relativiser du fait de la faible taille des échantillons de répondants dans ces pays. Les valeurs les plus faibles, entre 40 et 45%, sont trouvées en Géorgie, Biélorussie, Ukraine et Russie. Ces valeurs sont surtout fiables pour la Russie et l'Ukraine (où les échantillons de répondants sont suffisants).
+    
     """
 )
